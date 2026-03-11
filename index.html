@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misamis Oriental Fiesta Finder</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#f4f7fb;
+}
+
+header{
+background:#0a6ebd;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.search-box{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.search-box input,
+.search-box select{
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+.card{
+background:white;
+border-radius:8px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.place{
+font-size:18px;
+font-weight:bold;
+color:#0a6ebd;
+}
+
+.info{
+margin-top:5px;
+font-size:14px;
+}
+
+.badge{
+display:inline-block;
+background:#e7f0ff;
+padding:4px 8px;
+border-radius:4px;
+margin-right:6px;
+font-size:12px;
+}
+
+footer{
+text-align:center;
+padding:15px;
+font-size:12px;
+color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Misamis Oriental Fiesta Finder</h2>
+<p>Search fiestas by month, date, or patron saint</p>
+</header>
+
+<div class="container">
+
+<div class="search-box">
+
+<select id="monthFilter">
+<option value="">Filter by Month</option>
+<option>January</option>
+<option>February</option>
+<option>March</option>
+<option>April</option>
+<option>May</option>
+<option>June</option>
+<option>July</option>
+<option>August</option>
+<option>September</option>
+<option>October</option>
+<option>November</option>
+<option>December</option>
+</select>
+
+<input type="text" id="dateFilter" placeholder="Search date (ex: June 24)">
+
+<input type="text" id="patronFilter" placeholder="Search patron saint">
+
+</div>
+
+<div id="list"></div>
+
+</div>
+
+<footer>
+Misamis Oriental Fiesta Directory
+</footer>
+
+<script>
+
+const fiestas = [
+
+{place:"Misamis Oriental Province", patron:"Various / Kuyamis Festival", date:"January 6", month:"January"},
+
+{place:"Alubijid", patron:"Sta. Elena", date:"August 18", month:"August"},
+{place:"Balingasag", patron:"Sto. Niño", date:"January 15", month:"January"},
+{place:"Balingoan", patron:"San Roque", date:"August 16", month:"August"},
+{place:"Binuangan", patron:"San Isidro Labrador", date:"May 15", month:"May"},
+{place:"Claveria", patron:"Our Lady of Lourdes", date:"February 11", month:"February"},
+{place:"Gitagum", patron:"St. Vincent Ferrer", date:"April 5", month:"April"},
+{place:"Initao", patron:"Sto. Niño", date:"January 15", month:"January"},
+{place:"Jasaan", patron:"Immaculate Conception", date:"December 8", month:"December"},
+{place:"Kinoguitan", patron:"St. James the Apostle", date:"July 25", month:"July"},
+{place:"Lagonglong", patron:"St. John the Baptist", date:"June 24", month:"June"},
+{place:"Laguindingan", patron:"Holy Cross", date:"September 14", month:"September"},
+{place:"Libertad", patron:"San Isidro Labrador", date:"May 15", month:"May"},
+{place:"Lugait", patron:"San Isidro Labrador", date:"May 15", month:"May"},
+{place:"Magsaysay", patron:"San Roque", date:"August 16", month:"August"},
+{place:"Manticao", patron:"St. Augustine", date:"August 28", month:"August"},
+{place:"Medina", patron:"Our Lady of the Holy Rosary", date:"October 7", month:"October"},
+{place:"Naawan", patron:"St. John the Baptist", date:"June 24", month:"June"},
+{place:"Opol", patron:"Sts. Peter and Paul", date:"June 29", month:"June"},
+{place:"Salay", patron:"St. Joseph the Worker", date:"May 1", month:"May"},
+{place:"Sugbongcogon", patron:"St. Anthony of Padua", date:"June 13", month:"June"},
+{place:"Tagoloan", patron:"St. Vincent Ferrer", date:"April 5", month:"April"},
+{place:"Talisayan", patron:"Our Lady of Mt. Carmel", date:"July 16", month:"July"},
+{place:"Villanueva", patron:"Immaculate Conception", date:"December 8", month:"December"},
+
+{place:"El Salvador City", patron:"Divine Mercy", date:"April 2", month:"April"},
+{place:"Cagayan de Oro City", patron:"St. Augustine", date:"August 28", month:"August"},
+{place:"Gingoog City", patron:"St. Michael the Archangel", date:"September 29", month:"September"}
+
+]
+
+const list = document.getElementById("list")
+
+function display(data){
+
+list.innerHTML=""
+
+data.forEach(f => {
+
+list.innerHTML += `
+<div class="card">
+<div class="place">${f.place}</div>
+<div class="info">
+<span class="badge">${f.month}</span>
+<span class="badge">${f.date}</span>
+</div>
+<div class="info">Patron Saint: <b>${f.patron}</b></div>
+</div>
+`
+
+})
+
+}
+
+display(fiestas)
+
+document.getElementById("monthFilter").addEventListener("change", filter)
+document.getElementById("dateFilter").addEventListener("input", filter)
+document.getElementById("patronFilter").addEventListener("input", filter)
+
+function filter(){
+
+let month = document.getElementById("monthFilter").value.toLowerCase()
+let date = document.getElementById("dateFilter").value.toLowerCase()
+let patron = document.getElementById("patronFilter").value.toLowerCase()
+
+let filtered = fiestas.filter(f =>
+
+(f.month.toLowerCase().includes(month)) &&
+(f.date.toLowerCase().includes(date)) &&
+(f.patron.toLowerCase().includes(patron))
+
+)
+
+display(filtered)
+
+}
+
+</script>
+
+</body>
+</html>
